@@ -49,9 +49,10 @@ def check_arxiv(threshold):
 
 if __name__ == "__main__":
     # Check for anything in the last 1 hour (plus 5 min buffer)
-    time_threshold = datetime.now(timezone.utc) - timedelta(minutes=65)
+    time_threshold = datetime.now(timezone.utc) - timedelta(days=1)
     print(f"Scanning since {time_threshold}")
     
     check_github(time_threshold)
     check_arxiv(time_threshold)
     print("Scan complete.")
+
