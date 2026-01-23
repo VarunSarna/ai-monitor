@@ -1,7 +1,7 @@
 name: AI Radar
 on:
   schedule:
-    - cron: '*/30 * * * *' # Runs every 30 minutes
+    - cron: '0 * * * *' # Runs every 30 minutes
   workflow_dispatch: # Allows you to run it manually for testing
 
 jobs:
