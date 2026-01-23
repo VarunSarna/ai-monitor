@@ -4,7 +4,22 @@ import os
 import time
 
 # --- PASTE YOUR DATA HERE ---
-ORGS = ["deepseek-ai", "openai", "anthropics", "mistralai", "meta-llama"]
+ORGS = [
+    "deepseek-ai",      # The speed kings
+    "black-forest-labs", # Image/Video geniuses (Flux creators)
+    "xai-org",          # Elon's Grok team
+    "ByteDance-Seed",   # TikTok's research lab (Sora-level video)
+    "bytedance",        # General ByteDance AI releases
+    "anthropics",       # Claude creators
+    "openai",           # You know them
+    "mistralai",        # The European champions
+    "meta-llama",       # Meta's open-source arm
+    "google-deepmind",  # The academic powerhouse
+    "lucidrains",       # Solo dev who beats everyone to implementation
+    "togethercomputer", # Making AI run on consumer hardware
+    "microsoft",        # Look for "Phi" and "OmniParser" drops here
+    "QwenLM"            # Alibaba's massive open-source models
+]
 DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1464238545660285021/qZlm8arNPo0y_aRKxVvVz-zGKJx5Z9JwWMfpxAgds2ehb-yiJlS2ZLR3gUrDNDM-hYAW" 
 GITHUB_TOKEN = "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"
 # ----------------------------
@@ -52,4 +67,5 @@ if __name__ == "__main__":
     print("Radar is active. Checking every 5 minutes...")
     while True:
         check_new_repos()
+
         time.sleep(300)
