@@ -20,13 +20,26 @@ def notify(msg):
     requests.post(DISCORD_URL, json={"content": msg})
 
 def get_ai_summary(text):
+    """Uses the 2026 HF Router to distill abstracts into bullets"""
     if not HF_TOKEN: return text[:300]
     try:
-        url = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
-        headers = {"Authorization": f"Bearer {HF_TOKEN}"}
-        response = requests.post(url, headers=headers, json={"inputs": text[:1000]})
-        return "• " + response.json()[0]['summary_text'].replace(". ", "\n• ")
-    except: return text[:300]
+        url = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-cnn"
+        headers = {
+            "Authorization": f"Bearer {HF_TOKEN}",
+            "X-Wait-For-Model": "true",
+            "Content-Type": "application/json"
+        }
+        # We send the first 1000 chars of the abstract for the summary
+        response = requests.post(url, headers=headers, json={"inputs": text[:1000]}, timeout=30)
+        
+        if response.status_code == 200:
+            result = response.json()
+            summary = result[0]['summary_text'] if isinstance(result, list) else result['summary_text']
+            # Format into nice clean bullets for Discord
+            return "• " + summary.replace(". ", "\n• ")
+        return text[:300] + "..."
+    except:
+        return text[:300] + "..."
 
 def check_github(threshold):
     headers = {"Authorization": f"token {GITHUB_TOKEN}"}
@@ -79,3 +92,4 @@ if __name__ == "__main__":
     check_github(threshold)
     check_arxiv(threshold)
     check_prices()
+
